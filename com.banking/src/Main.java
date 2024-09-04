@@ -8,7 +8,7 @@ public class Main {
         boolean exit=true;
         Scanner scanner=new Scanner(System.in);
         while(exit){
-            System.out.println("Choose transactions: Create,Withdraw,Balance,Exit");
+            System.out.println("Choose transactions: Create,Withdraw,Balance,Deposite,Details, Transaction,Exit");
             String option= scanner.next();
             switch(option){
                 case "Create":
@@ -17,8 +17,17 @@ public class Main {
                 case "Withdraw" :
                     bank.withdrawFunds(scanner);
                     break;
+                case "Deposite" :
+                    bank.depositeFunds(scanner);
+                    break;
                 case "Balance":
                     bank.checkBalance(scanner);
+                    break;
+                case "Details":
+                    bank.accountDetails(scanner);
+                    break;
+                case "Transaction":
+                    bank.getTransactions(scanner);
                     break;
                 case "Exit":
                     System.out.println("Thank you for banking");

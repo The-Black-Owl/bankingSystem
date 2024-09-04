@@ -28,8 +28,6 @@ public class Bank {
 
     private String generateAccountNumber(){
         int digits=9;
-
-        // use SecureRandom instead for truly random values
         final Random r = new Random();
         long randomAccountNumber = r.nextInt(9) + 1;
         for (int i = 1; i < digits; i++) {
@@ -50,10 +48,7 @@ public class Bank {
     public void withdrawFunds(Scanner scanner){
         System.out.println("Enter account number");
         String accountNumber= scanner.next();
-
-        //obtain the account object from an Arraylist using account number
         Account account=getAccountByAccountNumber(accountNumber);
-        //withdrawal algorithm
         System.out.println("Enter amount");
         double withdrawalAmount= scanner.nextDouble();
         assert account != null;
@@ -63,23 +58,49 @@ public class Bank {
         transactions.add(transaction);
         account.setAmount(newAmount);
         account.setTransactions(transactions);
-
         System.out.println("Withdrawal completed!");
     }
 
     public void checkBalance(Scanner scanner){
         System.out.println("Enter account number");
         String accountNumber= scanner.next();
-
-        //obtain the account object from an Arraylist using account number
         Account account=getAccountByAccountNumber(accountNumber);
         assert account != null;
         System.out.println("Available amount: R "+ account.getAmount());
     }
 
-    public void depositeFunds(){
-
+    public void depositeFunds(Scanner scanner){
+        System.out.println("Enter account number");
+        String accountNumber= scanner.next();
+        Account account=getAccountByAccountNumber(accountNumber);
+        System.out.println("Enter amount");
+        double withdrawalAmount= scanner.nextDouble();
+        assert account != null;
+        double newAmount=account.getAmount()+withdrawalAmount;
+        Transaction transaction=new Transaction("Deposite",withdrawalAmount);
+        ArrayList<Transaction> transactions=account.getTransactions();
+        transactions.add(transaction);
+        account.setAmount(newAmount);
+        account.setTransactions(transactions);
+        System.out.println("Deposite completed!");
     }
 
+   public void getTransactions(Scanner scanner){
+       System.out.println("Enter account number");
+       String accountNumber= scanner.next();
+       Account account=getAccountByAccountNumber(accountNumber);
+       assert account!=null;
+       System.out.println("Transaction: "+account.getTransactions().toString());
+   }
+   public void accountDetails(Scanner scanner){
+       System.out.println("Enter account number");
+       String accountNumber= scanner.next();
+       Account account=getAccountByAccountNumber(accountNumber);
+       assert account != null;
+       String accountDetails="Account Details"+"\nAccount Holder: "+account.getAccountHolder()+
+               "\nAccount Number: "+account.getAccountNumber()
+               +"\nAvailable Amount: "+account.getAmount();
+       System.out.println(accountDetails);
+   }
 }
 
