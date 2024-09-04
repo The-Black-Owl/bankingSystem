@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Bank {
-    private ArrayList<Account> bankAccounts;
+    private final ArrayList<Account> bankAccounts;
 
     public Bank() {
         this.bankAccounts = new ArrayList<>();
