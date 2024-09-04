@@ -1,6 +1,7 @@
 package Bank;
 
 import AccountManagement.Account;
+import TransactionManagement.Transaction;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,7 +21,7 @@ public class Bank {
         System.out.println("Enter Deposite amount:");
         double initialDeposite= scanner.nextDouble();
         String accountNumber=generateAccountNumber();
-
+        scanner.close();
         Account newAccount= new Account(accountNumber, accountHolder,initialDeposite);
         bankAccounts.add(newAccount);
 
@@ -39,4 +40,53 @@ public class Bank {
         }
         return String.valueOf(randomAccountNumber);
     }
+
+    private Account getAccountByAccountNumber(String accountNumber){
+        for(Account account:bankAccounts){//loop through arraylist using account
+                if(account.getAccountNumber().equals(accountNumber)){
+                return account;
+            }
+        }
+        return null;
+    }
+
+    public void withdrawFunds(){
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("Enter account number");
+        String accountNumber= scanner.nextLine();
+
+        //obtain the account object from an Arraylist using account number
+        Account account=getAccountByAccountNumber(accountNumber);
+        //withdrawal algorithm
+        System.out.println("Enter account number");
+        double withdrawalAmount= scanner.nextDouble();
+        assert account != null;
+        double newAmount=account.getAmount()-withdrawalAmount;
+        Transaction transaction=new Transaction("Withdrawal",withdrawalAmount);
+        ArrayList<Transaction> transactions=account.getTransactions();
+        transactions.add(transaction);
+        account.setAmount(newAmount);
+        account.setTransactions(transactions);
+
+        scanner.close();
+        System.out.println("Withdrawal completed!");
+    }
+
+    public void checkBalance(){
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("Enter account number");
+        String accountNumber= scanner.nextLine();
+
+        //obtain the account object from an Arraylist using account number
+        Account account=getAccountByAccountNumber(accountNumber);
+                scanner.close();
+        assert account != null;
+        System.out.println("Available amount: R "+ account.getAmount());
+    }
+
+    public void depositeFunds(){
+
+    }
+
 }
+
