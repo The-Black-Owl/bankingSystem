@@ -3,17 +3,17 @@ package TransactionManagement;
 import java.time.LocalDateTime;
 
 public class Transaction {
-    private String transactionType;
+    private String transactionType;//change this to enum
     private double amount;
     private LocalDateTime dateTime;
 
     public Transaction() {
     }
 
-    public Transaction(String transactionType, double amount, LocalDateTime dateTime) {
+    public Transaction(String transactionType, double amount) {
         this.transactionType = transactionType;
         this.amount = amount;
-        this.dateTime = dateTime;
+        this.dateTime =  LocalDateTime.now();//time and date which transaction happens
     }
 
     public String getTransactionType() {
@@ -39,8 +39,4 @@ public class Transaction {
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
-
-    //method to deposite
-    //method to withdraw
-    //method to view transaction history
 }
