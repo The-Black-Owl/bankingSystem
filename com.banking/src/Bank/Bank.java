@@ -66,6 +66,11 @@ public class Bank {
         String accountNumber= scanner.next();
         Account account=getAccountByAccountNumber(accountNumber);
         assert account != null;
+        Transaction transaction=new Transaction("Withdrawal",
+                account.getAmount());
+        ArrayList<Transaction> transactions=account.getTransactions();
+        transactions.add(transaction);
+        account.setTransactions(transactions);
         System.out.println("Available amount: R "+ account.getAmount());
     }
 
@@ -90,7 +95,10 @@ public class Bank {
        String accountNumber= scanner.next();
        Account account=getAccountByAccountNumber(accountNumber);
        assert account!=null;
-       System.out.println("Transaction: "+account.getTransactions().toString());
+       System.out.println("Transaction: ");
+       for(Transaction transaction: account.getTransactions()){
+            System.out.println(transaction.toString());
+       }
    }
    public void accountDetails(Scanner scanner){
        System.out.println("Enter account number");

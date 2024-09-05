@@ -39,4 +39,12 @@ public class Transaction {
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction:" +
+                "transactionType='" + transactionType + '\'' +
+                ", amount=" + amount +
+                ", dateTime=" + dateTime ;
+    }
 }
