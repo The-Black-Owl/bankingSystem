@@ -2,6 +2,7 @@ package Bank;
 
 import AccountManagement.Account;
 import TransactionManagement.Transaction;
+import TransactionManagement.TransactionType;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -46,6 +47,7 @@ public class Bank {
     }
 
     public void withdrawFunds(Scanner scanner){
+        TransactionType type= TransactionType.WITHDRAW;
         System.out.println("Enter account number");
         String accountNumber= scanner.next();
         Account account=getAccountByAccountNumber(accountNumber);
@@ -53,7 +55,7 @@ public class Bank {
         double withdrawalAmount= scanner.nextDouble();
         assert account != null;
         double newAmount=account.getAmount()-withdrawalAmount;
-        Transaction transaction=new Transaction("Withdrawal",withdrawalAmount);
+        Transaction transaction=new Transaction(type,withdrawalAmount);
         ArrayList<Transaction> transactions=account.getTransactions();
         transactions.add(transaction);
         account.setAmount(newAmount);
@@ -62,11 +64,12 @@ public class Bank {
     }
 
     public void checkBalance(Scanner scanner){
+        TransactionType type= TransactionType.BALANCE;
         System.out.println("Enter account number");
         String accountNumber= scanner.next();
         Account account=getAccountByAccountNumber(accountNumber);
         assert account != null;
-        Transaction transaction=new Transaction("Withdrawal",
+        Transaction transaction=new Transaction(type,
                 account.getAmount());
         ArrayList<Transaction> transactions=account.getTransactions();
         transactions.add(transaction);
@@ -75,6 +78,7 @@ public class Bank {
     }
 
     public void depositeFunds(Scanner scanner){
+        TransactionType type= TransactionType.DEPOSITE;
         System.out.println("Enter account number");
         String accountNumber= scanner.next();
         Account account=getAccountByAccountNumber(accountNumber);
@@ -82,7 +86,7 @@ public class Bank {
         double withdrawalAmount= scanner.nextDouble();
         assert account != null;
         double newAmount=account.getAmount()+withdrawalAmount;
-        Transaction transaction=new Transaction("Deposite",withdrawalAmount);
+        Transaction transaction=new Transaction(type,withdrawalAmount);
         ArrayList<Transaction> transactions=account.getTransactions();
         transactions.add(transaction);
         account.setAmount(newAmount);

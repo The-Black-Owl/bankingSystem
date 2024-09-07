@@ -1,6 +1,7 @@
 package AccountManagement;
 
 import TransactionManagement.Transaction;
+import TransactionManagement.TransactionType;
 
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ public class Account {
     private String accountHolder;
     private double amount;
     private ArrayList<Transaction> transactions;
+    private TransactionType deposite=TransactionType.DEPOSITE;
 
     public Account(String accountNumber, String accountHolder,
                    double amount) {
@@ -16,7 +18,7 @@ public class Account {
         this.accountHolder = accountHolder;
         this.amount = amount;
         this.transactions = new ArrayList<>();
-        this.transactions.add(new Transaction("Deposite",amount));
+        this.transactions.add(new Transaction(this.deposite,amount));
     }
 
     public String getAccountNumber() {
