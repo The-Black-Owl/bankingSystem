@@ -18,7 +18,7 @@ public class Main {
                     bank.withdrawFunds(scanner);
                     break;
                 case "Deposite" :
-                    bank.depositeFunds(scanner);
+                    bank.depositFunds(scanner);
                     break;
                 case "Balance":
                     bank.checkBalance(scanner);

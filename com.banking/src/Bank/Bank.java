@@ -10,21 +10,27 @@ import java.util.Scanner;
 
 public class Bank {
     private final ArrayList<Account> bankAccounts;
+    private static final String PROMPT="Enter account number";
+    private static final String AMOUNT_PROMPT="Enter amount";
 
     public Bank() {
         this.bankAccounts = new ArrayList<>();
     }
 
     public void createAccount(Scanner scanner){
-        System.out.println("Enter account holder's name:");
-        String accountHolder= scanner.next();
-        System.out.println("Enter Deposite amount:");
-        double initialDeposite= scanner.nextDouble();
-        String accountNumber=generateAccountNumber();
-        Account newAccount= new Account(accountNumber, accountHolder,initialDeposite);
-        bankAccounts.add(newAccount);
-        System.out.println("Successfully created account! ");
-        System.out.println("Account Number: " + accountNumber);
+        try{
+            System.out.println("Enter account holder's name:");
+            String accountHolder= scanner.next();
+            System.out.println("Enter deposit amount:");
+            double initialDeposit= scanner.nextDouble();
+            String accountNumber=generateAccountNumber();
+            Account newAccount= new Account(accountNumber, accountHolder,initialDeposit);
+            bankAccounts.add(newAccount);
+            System.out.println("Successfully created account! ");
+            System.out.println("Account Number: " + accountNumber);
+        }catch(NullPointerException e){
+            System.out.println("Account holder,amount cannot be empty...");
+        }
     }
 
     private String generateAccountNumber(){
@@ -32,7 +38,7 @@ public class Bank {
         final Random r = new Random();
         long randomAccountNumber = r.nextInt(9) + 1;
         for (int i = 1; i < digits; i++) {
-            randomAccountNumber = randomAccountNumber * 10L + (long) r.nextInt(10);
+            randomAccountNumber = randomAccountNumber * 10L + r.nextInt(10);
         }
         return String.valueOf(randomAccountNumber);
     }
@@ -47,55 +53,72 @@ public class Bank {
     }
 
     public void withdrawFunds(Scanner scanner){
-        TransactionType type= TransactionType.WITHDRAW;
-        System.out.println("Enter account number");
-        String accountNumber= scanner.next();
-        Account account=getAccountByAccountNumber(accountNumber);
-        System.out.println("Enter amount");
-        double withdrawalAmount= scanner.nextDouble();
-        assert account != null;
-        double newAmount=account.getAmount()-withdrawalAmount;
-        Transaction transaction=new Transaction(type,withdrawalAmount);
-        ArrayList<Transaction> transactions=account.getTransactions();
-        transactions.add(transaction);
-        account.setAmount(newAmount);
-        account.setTransactions(transactions);
-        System.out.println("Withdrawal completed!");
+        try{
+            TransactionType type= TransactionType.WITHDRAW;
+            System.out.println(PROMPT);
+            String accountNumber= scanner.next();
+            Account account=getAccountByAccountNumber(accountNumber);
+            System.out.println(AMOUNT_PROMPT);
+            double withdrawalAmount= scanner.nextDouble();
+            assert account != null;
+            double newAmount=account.getAmount()-withdrawalAmount;
+            Transaction transaction=new Transaction(type,withdrawalAmount);
+            ArrayList<Transaction> transactions=account.getTransactions();
+            transactions.add(transaction);
+            account.setAmount(newAmount);
+            account.setTransactions(transactions);
+            System.out.println("Withdrawal completed!");
+        }catch(NullPointerException e){
+            System.out.println("Account or amount is empty");
+        }catch(Exception e){
+            System.out.println("Account or amount is invalid");
+        }
     }
 
     public void checkBalance(Scanner scanner){
         TransactionType type= TransactionType.BALANCE;
-        System.out.println("Enter account number");
-        String accountNumber= scanner.next();
-        Account account=getAccountByAccountNumber(accountNumber);
-        assert account != null;
-        Transaction transaction=new Transaction(type,
-                account.getAmount());
-        ArrayList<Transaction> transactions=account.getTransactions();
-        transactions.add(transaction);
-        account.setTransactions(transactions);
-        System.out.println("Available amount: R "+ account.getAmount());
+        try {
+            System.out.println(PROMPT);
+            String accountNumber = scanner.next();
+            Account account = getAccountByAccountNumber(accountNumber);
+            assert account != null;
+            Transaction transaction=new Transaction(type,account.getAmount());
+            ArrayList<Transaction> transactions=account.getTransactions();
+            transactions.add(transaction);
+            account.setTransactions(transactions);
+            System.out.println("Available amount: R "+ account.getAmount());
+        }catch (NullPointerException e){
+            System.out.println("The account number is null");
+        }catch(Exception e){
+            System.out.println("Account not found...");
+        }
     }
 
-    public void depositeFunds(Scanner scanner){
-        TransactionType type= TransactionType.DEPOSITE;
-        System.out.println("Enter account number");
-        String accountNumber= scanner.next();
-        Account account=getAccountByAccountNumber(accountNumber);
-        System.out.println("Enter amount");
-        double withdrawalAmount= scanner.nextDouble();
-        assert account != null;
-        double newAmount=account.getAmount()+withdrawalAmount;
-        Transaction transaction=new Transaction(type,withdrawalAmount);
-        ArrayList<Transaction> transactions=account.getTransactions();
-        transactions.add(transaction);
-        account.setAmount(newAmount);
-        account.setTransactions(transactions);
-        System.out.println("Deposite completed!");
+    public void depositFunds(Scanner scanner){
+        try{
+            TransactionType type= TransactionType.DEPOSITE;
+            System.out.println(PROMPT);
+            String accountNumber= scanner.next();
+            Account account=getAccountByAccountNumber(accountNumber);
+            System.out.println(AMOUNT_PROMPT);
+            double withdrawalAmount= scanner.nextDouble();
+            assert account != null;
+            double newAmount=account.getAmount()+withdrawalAmount;
+            Transaction transaction=new Transaction(type,withdrawalAmount);
+            ArrayList<Transaction> transactions=account.getTransactions();
+            transactions.add(transaction);
+            account.setAmount(newAmount);
+            account.setTransactions(transactions);
+            System.out.println("Deposit completed!");
+        }catch(NullPointerException e){
+            System.out.println("Account number or amount is not fount");
+        }catch(Exception e){
+            System.out.println("Amount or Account are invalid");
+        }
     }
 
    public void getTransactions(Scanner scanner){
-       System.out.println("Enter account number");
+       System.out.println(PROMPT);
        String accountNumber= scanner.next();
        Account account=getAccountByAccountNumber(accountNumber);
        assert account!=null;
@@ -105,7 +128,7 @@ public class Bank {
        }
    }
    public void accountDetails(Scanner scanner){
-       System.out.println("Enter account number");
+       System.out.println(PROMPT);
        String accountNumber= scanner.next();
        Account account=getAccountByAccountNumber(accountNumber);
        assert account != null;
