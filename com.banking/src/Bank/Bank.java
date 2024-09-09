@@ -28,7 +28,7 @@ public class Bank {
             bankAccounts.add(newAccount);
             System.out.println("Successfully created account! ");
             System.out.println("Account Number: " + accountNumber);
-        }catch(NullPointerException e){
+        }catch(Exception e){
             System.out.println("Account holder,amount cannot be empty...");
         }
     }
