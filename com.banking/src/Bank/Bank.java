@@ -68,8 +68,6 @@ public class Bank {
             account.setAmount(newAmount);
             account.setTransactions(transactions);
             System.out.println("Withdrawal completed!");
-        }catch(NullPointerException e){
-            System.out.println("Account or amount is empty");
         }catch(Exception e){
             System.out.println("Account or amount is invalid");
         }

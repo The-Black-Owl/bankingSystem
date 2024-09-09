@@ -10,7 +10,7 @@ public class Account {
     private String accountHolder;
     private double amount;
     private ArrayList<Transaction> transactions;
-    private TransactionType deposite=TransactionType.DEPOSITE;
+    private TransactionType deposit=TransactionType.DEPOSITE;
 
     public Account(String accountNumber, String accountHolder,
                    double amount) {
@@ -18,7 +18,7 @@ public class Account {
         this.accountHolder = accountHolder;
         this.amount = amount;
         this.transactions = new ArrayList<>();
-        this.transactions.add(new Transaction(this.deposite,amount));
+        this.transactions.add(new Transaction(this.deposit,amount));
     }
 
     public String getAccountNumber() {
