@@ -1,5 +1,5 @@
 package AccountManagement;
 
-public enum AcountStaus {
+public enum AccountStatus {
     ACTIVE, INACTIVE
 }

@@ -10,15 +10,18 @@ public class Account {
     private String accountHolder;
     private double amount;
     private ArrayList<Transaction> transactions;
-    private TransactionType deposit=TransactionType.DEPOSITE;
+
+    private AccountStatus accountStatus;
 
     public Account(String accountNumber, String accountHolder,
-                   double amount) {
+                   double amount, AccountStatus accountStatus) {
         this.accountNumber = accountNumber;
         this.accountHolder = accountHolder;
         this.amount = amount;
         this.transactions = new ArrayList<>();
-        this.transactions.add(new Transaction(this.deposit,amount));
+        this.accountStatus=accountStatus;
+        TransactionType deposit = TransactionType.DEPOSIT;
+        this.transactions.add(new Transaction(deposit,amount));
     }
 
     public String getAccountNumber() {
@@ -53,4 +56,11 @@ public class Account {
         this.transactions = transactions;
     }
 
+    public AccountStatus getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(AccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
+    }
 }

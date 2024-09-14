@@ -1,14 +1,14 @@
 package Bank;
 
 import AccountManagement.Account;
+import AccountManagement.AccountStatus;
 import TransactionManagement.Transaction;
 import TransactionManagement.TransactionType;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
-public class Bank {
+public class Bank implements BankingActions {
     private final ArrayList<Account> bankAccounts;
     private static final String PROMPT="Enter account number";
     private static final String AMOUNT_PROMPT="Enter amount";
@@ -17,6 +17,7 @@ public class Bank {
         this.bankAccounts = new ArrayList<>();
     }
 
+    @Override
     public void createAccount(Scanner scanner){
         try{
             System.out.println("Enter account holder's name:");
@@ -24,7 +25,7 @@ public class Bank {
             System.out.println("Enter deposit amount:");
             double initialDeposit= scanner.nextDouble();
             String accountNumber=generateAccountNumber();
-            Account newAccount= new Account(accountNumber, accountHolder,initialDeposit);
+            Account newAccount= new Account(accountNumber, accountHolder,initialDeposit, AccountStatus.ACTIVE);
             bankAccounts.add(newAccount);
             System.out.println("Successfully created account! ");
             System.out.println("Account Number: " + accountNumber);
@@ -32,26 +33,7 @@ public class Bank {
             System.out.println("Account holder,amount cannot be empty...");
         }
     }
-
-    private String generateAccountNumber(){
-        int digits=9;
-        final Random r = new Random();
-        long randomAccountNumber = r.nextInt(9) + 1;
-        for (int i = 1; i < digits; i++) {
-            randomAccountNumber = randomAccountNumber * 10L + r.nextInt(10);
-        }
-        return String.valueOf(randomAccountNumber);
-    }
-
-    private Account getAccountByAccountNumber(String accountNumber){
-        for(Account account:bankAccounts){//loop through arraylist using account
-                if(account.getAccountNumber().equals(accountNumber)){
-                return account;
-            }
-        }
-        return null;
-    }
-
+    @Override
     public void withdrawFunds(Scanner scanner){
         try{
             TransactionType type= TransactionType.WITHDRAW;
@@ -73,6 +55,7 @@ public class Bank {
         }
     }
 
+    @Override
     public void checkBalance(Scanner scanner){
         TransactionType type= TransactionType.BALANCE;
         try {
@@ -92,9 +75,10 @@ public class Bank {
         }
     }
 
+   @Override
     public void depositFunds(Scanner scanner){
         try{
-            TransactionType type= TransactionType.DEPOSITE;
+            TransactionType type= TransactionType.DEPOSIT;
             System.out.println(PROMPT);
             String accountNumber= scanner.next();
             Account account=getAccountByAccountNumber(accountNumber);
@@ -114,7 +98,7 @@ public class Bank {
             System.out.println("Amount or Account are invalid");
         }
     }
-
+   @Override
    public void getTransactions(Scanner scanner){
        System.out.println(PROMPT);
        String accountNumber= scanner.next();
@@ -125,6 +109,7 @@ public class Bank {
             System.out.println(transaction.toString());
        }
    }
+   @Override
    public void accountDetails(Scanner scanner){
        System.out.println(PROMPT);
        String accountNumber= scanner.next();
@@ -135,5 +120,14 @@ public class Bank {
                +"\nAvailable Amount: "+account.getAmount();
        System.out.println(accountDetails);
    }
+
+    private Account getAccountByAccountNumber(String accountNumber){
+        for(Account account:bankAccounts){//loop through arraylist using account
+            if(account.getAccountNumber().equals(accountNumber)){
+                return account;
+            }
+        }
+        return null;
+    }
 }
 
