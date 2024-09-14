@@ -6,6 +6,7 @@ import TransactionManagement.Transaction;
 import TransactionManagement.TransactionType;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Bank implements BankingActions {
@@ -20,10 +21,24 @@ public class Bank implements BankingActions {
     @Override
     public void createAccount(Scanner scanner){
         try{
-            System.out.println("Enter account holder's name:");
-            String accountHolder= scanner.next();
-            System.out.println("Enter deposit amount:");
-            double initialDeposit= scanner.nextDouble();
+            System.out.println("Enter account holder's first name:");
+            String accountHolderFirstName= scanner.next();
+            System.out.println("Enter account holder's last name:");
+            String accountHolderLastName= scanner.next();
+            String accountHolder=accountHolderFirstName+" "+accountHolderLastName;
+            double initialDeposit = -1;
+            while (initialDeposit < 0) {
+                System.out.println("Enter deposit amount:");
+                try {
+                    initialDeposit = scanner.nextDouble();
+                    if (initialDeposit < 0) {
+                        System.out.println("Deposit amount must be positive. Please try again.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter a valid number for the deposit amount.");
+                    scanner.next(); // Clear the invalid input
+                }
+            }
             String accountNumber=generateAccountNumber();
             Account newAccount= new Account(accountNumber, accountHolder,initialDeposit, AccountStatus.ACTIVE);
             bankAccounts.add(newAccount);
