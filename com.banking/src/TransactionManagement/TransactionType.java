@@ -1,5 +1,5 @@
 package TransactionManagement;
 
 public enum TransactionType {
-    WITHDRAW, DEPOSITE,BALANCE
+    WITHDRAW, DEPOSIT,BALANCE
 }
