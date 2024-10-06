@@ -21,3 +21,6 @@ The features of this application, is a **Bank**, **Transaction**, **Account** an
 ### Transactions class
 > The transactions class, is used to create a transaction object. The transaction class is supported by the **Transaction Type** enum.
 >> ***Transaction type***: This **Enum** contains the transactions; **DEPOSITE, WITHDRAW, BALANCE**. 
+
+## Users class
+> Will contain the usernanme and class
